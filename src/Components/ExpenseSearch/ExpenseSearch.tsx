@@ -31,6 +31,8 @@ class ExpenseSearch extends React.Component<Expense> {
                     <h3>information: {this.props.user.first} {this.props.user.last}</h3>
                     <h3>Amount: {this.props.amount.value} · {this.props.amount.currency} </h3>
                     <h3>Merchant: {this.props.merchant}</h3>
+                    <h5>Category: {this.props.category}</h5>
+                    <h5>Comment: {this.props.comment}</h5>
                 </div>
                 <div className="receipts-box">
                     <img className="receipt" alt="Receipt" src="https://image.shutterstock.com/image-vector/receipt-paper-cartoon-vector-illustration-260nw-666049375.jpg" />

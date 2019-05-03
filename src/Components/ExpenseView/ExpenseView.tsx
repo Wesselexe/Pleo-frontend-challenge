@@ -7,8 +7,8 @@ import fetchExpenses from '../../Api/Api'
   interface State {
     items: any[],
     isLoaded: boolean,
-}
-  
+} 
+
 
 class ExpenseView extends React.Component {
     state: State = {
@@ -18,10 +18,10 @@ class ExpenseView extends React.Component {
 
     componentDidMount() {
         const request = async () => {
-            const a = await fetchExpenses()
-            await console.log(a)
+            const response = await fetchExpenses()
+            await console.log(response)
             await this.setState({
-                items: a,
+                items: response,
                 isLoaded: true // change
             })
         }
@@ -45,7 +45,6 @@ class ExpenseView extends React.Component {
             return (
                 <div>
                     <h1>LOADING</h1>
-                    
                 </div>
             )
         }
