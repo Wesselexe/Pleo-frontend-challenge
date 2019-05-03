@@ -11,8 +11,8 @@ const fetchExpenses = (limit?:string, offset?:string) => {
     })
     .then((result) => {
         if (result.expenses) {
-            console.log(result.expenses)
-            console.log(typeof result.expenses)
+            console.log(result.expenses[0].index)
+            console.log(result.expenses[0].id)
             return result.expenses
         }
     })

@@ -1,6 +1,18 @@
 import React from "react";
 
-class ExpenseSearch extends React.Component {
+interface Expense {
+    id:string,
+    amount:object,
+    date:string,
+    merchant:string,
+    receipts:[],
+    comment:string,
+    category:string,
+    user:object,
+    index:number
+}
+
+class ExpenseSearch extends React.Component<Expense> {
     render() {
         return (
             <div className="expense-box">

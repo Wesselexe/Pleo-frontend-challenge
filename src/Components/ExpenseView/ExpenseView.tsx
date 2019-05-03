@@ -3,7 +3,6 @@ import ExpenseSearch from '../ExpenseSearch/ExpenseSearch'
 import './ExpenseView.css'
 import fetchExpenses from '../../Api/Api'
 
-
 class ExpenseView extends React.Component {
     state = {
         expenses: []
@@ -18,7 +17,11 @@ class ExpenseView extends React.Component {
     render() {
         return (
             <div>
-                123
+                {
+                    this.state.expenses.map((it) => {
+                        return <ExpenseSearch key={it} Expense={it} />
+                    })
+                }
             </div>
         )
     }
