@@ -28,9 +28,9 @@ class ExpenseSearch extends React.Component<Expense> {
         return (
             <div className="expense-box">
                 <div className="expense-text">
-                    <h3>information: {this.props.user.first} {this.props.user.last}</h3>
-                    <h3>Amount: {this.props.amount.value} · {this.props.amount.currency} </h3>
-                    <h3>Merchant: {this.props.merchant}</h3>
+                    <h4>information: {this.props.user.first} {this.props.user.last}</h4>
+                    <h4>Amount: {this.props.amount.value} · {this.props.amount.currency} </h4>
+                    <h4>Merchant: {this.props.merchant}</h4>
                     <h5>Category: {this.props.category}</h5>
                     <h5>Comment: {this.props.comment}</h5>
                 </div>
