@@ -5,7 +5,7 @@ import ExpenseView from './Components/ExpenseView/ExpenseView'
 function App() {
   return (
     <div className="App">
-      <h1>Clean up</h1>
+      <h1>Expense Master 2000</h1>
       <ExpenseView />
     </div>
   );
