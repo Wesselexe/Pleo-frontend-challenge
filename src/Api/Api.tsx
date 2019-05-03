@@ -1,4 +1,4 @@
-const endpoint:string = "http://localhost:3000/expenses?limit=50";
+const endpoint:string = "http://localhost:3000/expenses";
 
 const fetchExpenses = (limit?:string, offset?:string):any => {
     return fetch(endpoint)
