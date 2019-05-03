@@ -1,27 +1,16 @@
 import React from "react";
 
 class ExpenseSearch extends React.Component {
-    componentDidMount() {
-        fetch("http://localhost:3000/expenses?limit=5")
-        .then(res => res.json())
-        .then(
-            (result) => {
-                console.log(result) // obejct
-                console.log(typeof result.expenses)
-                this.setState({items: result.expenses[0].amount.value})
-                this.setState({arrayOfExpenses: result.expenses})
-                let output = 0
-                result.expenses.map((it:any) => {
-                    return output += Number(it.amount.value)
-                })
-                this.setState({items: output})
-            }
-        ) 
-    }
-
     render() {
         return (
-            <div></div>
+            <div className="expense-box">
+                <div className="expense-text">
+                    <h1>Expense information</h1>
+                </div>
+                <div className="receipts-box">
+                    <img className="receipt" alt="Receipt" src="https://image.shutterstock.com/image-vector/receipt-paper-cartoon-vector-illustration-260nw-666049375.jpg" />
+                </div>
+            </div>
         )
     }
 }
