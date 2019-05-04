@@ -22,9 +22,7 @@ const addComment = (id:string, comment:string) => {
             'Content-Type': 'application/json'
           }
     }).then(res => res.json())
-    .then(response => {
-        return "succes"
-    })
+    .then(response => console.log('Success:', JSON.stringify(response)))
     .catch(error => console.error('Error:', error));
 }
 
