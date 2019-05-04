@@ -12,4 +12,16 @@ const fetchExpenses = (limit?:string, offset?:string):any => {
     })
 }
 
-export default fetchExpenses;
+const addComment = (id:string, comment:string) => {
+    fetch(endpoint, {
+        method: 'POST',
+        body: JSON.stringify(comment),
+        headers:{
+            'Content-Type': 'application/json'
+          }
+    }).then(res => res.json())
+    .then(response => console.log('Success:', JSON.stringify(response)))
+    .catch(error => console.error('Error:', error));
+}
+
+export { fetchExpenses, addComment };

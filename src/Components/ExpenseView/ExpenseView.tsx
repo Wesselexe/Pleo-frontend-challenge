@@ -1,7 +1,7 @@
 import React from "react";
 import ExpenseSearch from '../ExpenseSearch/ExpenseSearch'
 import './ExpenseView.css'
-import fetchExpenses from '../../Api/Api'
+import { fetchExpenses } from '../../Api/Api'
 
 
   interface State {
