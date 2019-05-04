@@ -13,14 +13,18 @@ const fetchExpenses = (limit?:string, offset?:string):any => {
 }
 
 const addComment = (id:string, comment:string) => {
-    fetch((endpoint + "/:" + id), {
+    return fetch((endpoint + "/" + id), {
         method: 'POST',
-        body: "comment " + comment,
+        body: JSON.stringify({
+            comment: comment
+        }),
         headers:{
             'Content-Type': 'application/json'
           }
     }).then(res => res.json())
-    .then(response => console.log('Success:', JSON.stringify(response)))
+    .then(response => {
+        return "succes"
+    })
     .catch(error => console.error('Error:', error));
 }
 

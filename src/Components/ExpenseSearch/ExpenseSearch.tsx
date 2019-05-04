@@ -15,7 +15,8 @@ interface Expense {
     comment:string,
     category:string,
     user:User,
-    index:number
+    index:number,
+    update:any
 }
 
 interface Amount {
@@ -31,16 +32,22 @@ interface User {
 
 class ExpenseSearch extends React.Component<Expense> {
     state = {
-        activeExpense: false
+        activeExpense: false,
+        commentText: ""
     }
     
     expenseClick = (event:React.MouseEvent):void => {
         this.setState({activeExpense: !this.state.activeExpense})
     }
 
-    commentConfirm = (event:React.MouseEvent):void => {
+    updateCommentText = (event:any) => {
+        this.setState({commentText: event.target.value})
+    }
+
+    commentConfirm = async (event:React.MouseEvent) => {
         event.preventDefault();
-        addComment(this.props.id, "123");
+        await addComment(this.props.id, this.state.commentText);
+        this.props.update()
     }
 
     render() {
@@ -74,7 +81,7 @@ class ExpenseSearch extends React.Component<Expense> {
                             <Form>
                                 <Form.Group controlId="formBasicPassword">
                                     <Form.Label><h5>Comment:</h5></Form.Label>
-                                    <Form.Control type="text" defaultValue={this.props.comment} />
+                                    <Form.Control type="text" defaultValue={this.props.comment} onChange={this.updateCommentText}/>
                                 </Form.Group>
                                 <Button variant="primary" type="submit" onClick={this.commentConfirm}>
                                     Update comment

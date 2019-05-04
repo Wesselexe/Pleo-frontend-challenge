@@ -16,6 +16,18 @@ class ExpenseView extends React.Component {
         isLoaded: false
     };
 
+    refresh = ():void => {
+        const request = async () => {
+            const response = await fetchExpenses()
+            await console.log(response)
+            await this.setState({
+                items: response,
+                isLoaded: true // change
+            })
+        }
+        request();
+    }
+
     componentDidMount() {
         const request = async () => {
             const response = await fetchExpenses()
@@ -36,7 +48,7 @@ class ExpenseView extends React.Component {
                 <div>
                     {
                         items.map((data) => {
-                            return <ExpenseSearch key={data.index} id={data.id} amount={data.amount} date={data.date} merchant={data.merchant} receipts={data.receipts} comment={data.comment} category={data.category} user={data.user} index={data.index}/>
+                            return <ExpenseSearch key={data.index} update={this.refresh} id={data.id} amount={data.amount} date={data.date} merchant={data.merchant} receipts={data.receipts} comment={data.comment} category={data.category} user={data.user} index={data.index}/>
                         })
                     }
                 </div>
