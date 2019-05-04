@@ -13,9 +13,9 @@ const fetchExpenses = (limit?:string, offset?:string):any => {
 }
 
 const addComment = (id:string, comment:string) => {
-    fetch(endpoint, {
+    fetch((endpoint + "/:" + id), {
         method: 'POST',
-        body: JSON.stringify(comment),
+        body: "comment " + comment,
         headers:{
             'Content-Type': 'application/json'
           }
