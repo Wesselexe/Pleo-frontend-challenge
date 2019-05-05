@@ -20,7 +20,14 @@ class ExpenseView extends React.Component {
     };
 
     componentDidMount() {
-        this.refresh()
+        const request = async () => {
+            const response = await fetchExpenses()
+            await console.log(response)
+            await this.setState({items: response})
+            await this.postInit();
+            await this.setState({isLoaded: true})
+        }
+        request();
     }
 
     postInit = () => {
@@ -35,9 +42,10 @@ class ExpenseView extends React.Component {
         const request = async () => {
             const response = await fetchExpenses()
             await console.log(response)
-            await this.setState({items: response})
-            await this.postInit();
-            await this.setState({isLoaded: true})
+            await this.setState({
+                items: response,
+                isLoaded: true
+            })
         }
         request();
     }
@@ -47,6 +55,7 @@ class ExpenseView extends React.Component {
             this.refresh();
             return
         }
+        
         const filteredView = this.state.items.filter((it) => {   
             if (it.user.first === user) {
                 return it
