@@ -20,14 +20,14 @@ class ExpenseView extends React.Component {
     };
 
     componentDidMount() {
-        this.refresh();
+        this.refresh()
+    }
 
-        const users = this.state.items.filter((value, index, self) => {
-            return self.indexOf(value) === index;
-        })
-
-        this.setState({
-            users: users
+    postInit = () => {
+        this.state.items.map((data) => {
+            if (this.state.users.indexOf(data.user.first) === -1) {
+                return this.state.users.push(data.user.first)
+            }
         })
     }
 
@@ -35,18 +35,26 @@ class ExpenseView extends React.Component {
         const request = async () => {
             const response = await fetchExpenses()
             await console.log(response)
-            await this.setState({
-                items: response,
-                isLoaded: true // change
-            })
+            await this.setState({items: response})
+            await this.postInit();
+            await this.setState({isLoaded: true})
         }
         request();
     }
 
     filterUsers = (user:any) => {
-        this.state.items.map((it) => {
-            return it === user
+        if (user === "Users") {
+            this.refresh();
+            return
+        }
+        const filteredView = this.state.items.filter((it) => {   
+            if (it.user.first === user) {
+                return it
+            }
         })
+
+        console.log(filteredView)
+        this.setState({items: filteredView})
     }
 
     render() {
