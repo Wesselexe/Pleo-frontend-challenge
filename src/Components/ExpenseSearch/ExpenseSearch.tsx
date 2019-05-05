@@ -75,13 +75,13 @@ class ExpenseSearch extends React.Component<Expense> {
                             <h4>Amount: {this.props.amount.value} · {this.props.amount.currency} </h4>
                             <h4>Merchant: {this.props.merchant}</h4>
                         </div>
-                        <div>
+                        <div className="mid-box">
                             <h5>Category:</h5>
                             <h6>{this.props.category}</h6>
                             <Form>
                                 <Form.Group controlId="formBasicPassword">
                                     <Form.Label><h5>Comment:</h5></Form.Label>
-                                    <Form.Control type="text" defaultValue={this.props.comment} onChange={this.updateCommentText}/>
+                                    <Form.Control as="textarea" rows="6" type="text" defaultValue={this.props.comment} onChange={this.updateCommentText}/>
                                 </Form.Group>
                                 <Button variant="primary" type="submit" onClick={this.commentConfirm}>
                                     Update comment

@@ -7,13 +7,15 @@ import { fetchExpenses } from '../../Api/Api'
   interface State {
     items: any[],
     isLoaded: boolean,
+    users:string[]
 } 
 
 
 class ExpenseView extends React.Component {
     state: State = {
         items: [],
-        isLoaded: false
+        isLoaded: false,
+        users: []
     };
 
     refresh = ():void => {
@@ -38,6 +40,12 @@ class ExpenseView extends React.Component {
             })
         }
         request();
+        const users = this.state.items.map(it => {
+            
+        })
+        this.setState({
+            users: users
+        })
     }
 
     render() {
