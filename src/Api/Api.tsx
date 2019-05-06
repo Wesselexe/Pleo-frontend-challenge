@@ -1,5 +1,6 @@
 const endpoint:string = "http://localhost:3000/expenses";
 
+// function to GET expenses from the API
 const fetchExpenses = (limit?:string, offset?:string):any => {
     return fetch(endpoint)
     .then(response => response.json())
@@ -12,6 +13,7 @@ const fetchExpenses = (limit?:string, offset?:string):any => {
     })
 }
 
+// Function to add a comment
 const addComment = (id:string, comment:string) => {
     return fetch((endpoint + "/" + id), {
         method: 'POST',
@@ -26,4 +28,9 @@ const addComment = (id:string, comment:string) => {
     .catch(error => console.error('Error:', error));
 }
 
-export { fetchExpenses, addComment };
+// Function to upload receipt
+const addReceipt = (id:string, file:string[]) => {
+    return
+}
+
+export { fetchExpenses, addComment, addReceipt};

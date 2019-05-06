@@ -1,6 +1,8 @@
 import React from "react";
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 
+import './Menu.css'
+
 interface MenuProps {
     users: string[],
     filter: any
@@ -25,7 +27,7 @@ class Menu extends React.Component<MenuProps> {
             <div className="menu-box">
                 <ul className="filters">
                     <DropdownButton id="dropdown-basic-button" title={this.state.selectedUser}>
-                        <Dropdown.Item key="clear" id="Users" href="#" onClick={this.handleClick}>Clear filters</Dropdown.Item>
+                        <Dropdown.Item className="clear-filters" key="clear" id="Users" href="#" onClick={this.handleClick}>Clear filters</Dropdown.Item>
                         <Dropdown.Divider />
                         {
                             users.map((data) => {
