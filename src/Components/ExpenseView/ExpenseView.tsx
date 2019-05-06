@@ -8,6 +8,7 @@ import { fetchExpenses } from '../../Api/Api'
   interface State {
     items: any[],
     isLoaded: boolean,
+    filter: string,
     users:string[]
 } 
 
@@ -16,6 +17,7 @@ class ExpenseView extends React.Component {
     state: State = {
         items: [],
         isLoaded: false,
+        filter: "",
         users: []
     };
 
@@ -46,6 +48,9 @@ class ExpenseView extends React.Component {
                 items: response,
                 isLoaded: true
             })
+            if (this.state.filter !== "") {
+                this.filterUsers(this.state.filter);
+            }
         }
         request();
     }
@@ -53,6 +58,7 @@ class ExpenseView extends React.Component {
     filterUsers = (user:any) => {
         if (user === "Users") {
             this.refresh();
+            this.setState({filter: ""})
             return
         }
         
@@ -63,7 +69,10 @@ class ExpenseView extends React.Component {
         })
 
         console.log(filteredView)
-        this.setState({items: filteredView})
+        this.setState({
+            items: filteredView,
+            filter: user
+        })
     }
 
     render() {

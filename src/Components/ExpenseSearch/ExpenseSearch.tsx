@@ -60,7 +60,7 @@ class ExpenseSearch extends React.Component<Expense> {
     commentConfirm = async (event:React.MouseEvent) => {
         event.preventDefault();
         await addComment(this.props.id, this.state.commentText);
-        this.props.update()
+        this.props.update();
     }
 
     render() {
