@@ -41,7 +41,13 @@
 
 .receipt {
     width: auto;
-    height: 100%;
+    height: 90%;
+}
+
+.receipt-options {
+    text-align: right;
+    flex-direction: row;
+    margin: 5px;
 }
 
 .mid-box {

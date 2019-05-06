@@ -11,7 +11,7 @@ interface Expense {
     amount:Amount,
     date:string,
     merchant:string,
-    receipts:[],
+    receipts:string[],
     comment:string,
     category:string,
     user:User,
@@ -30,10 +30,23 @@ interface User {
     email:string
 }
 
+interface State {
+    receipts: string[],
+    activeExpense: boolean,
+    commentText: string
+}
+
 class ExpenseSearch extends React.Component<Expense> {
-    state = {
+    state: State = {
+        receipts: ["https://image.shutterstock.com/image-vector/receipt-paper-cartoon-vector-illustration-260nw-666049375.jpg"],
         activeExpense: false,
         commentText: ""
+    }
+
+    componentDidMount() {
+        if (this.props.receipts === []) {
+            this.setState({receipts: this.props.receipts})
+        }
     }
     
     expenseClick = (event:React.MouseEvent):void => {
@@ -62,11 +75,13 @@ class ExpenseSearch extends React.Component<Expense> {
                         <h5>Comment: {this.props.comment} </h5>
                     </div>
                     <div className="receipts-box">
-                        <img className="receipt" alt="Receipt" src="https://image.shutterstock.com/image-vector/receipt-paper-cartoon-vector-illustration-260nw-666049375.jpg" />
+                        <img className="receipt" alt="Receipt" src={this.state.receipts[0]} />
                     </div>
                 </div>
             )
         } else {
+            let receiptNum:number = 0;
+
             return (
                 <Fragment>
                     <div className='active-expense-box'>
@@ -89,7 +104,12 @@ class ExpenseSearch extends React.Component<Expense> {
                             </Form>
                         </div>
                         <div className="receipts-box">
-                            <img className="receipt" alt="Receipt" src="https://image.shutterstock.com/image-vector/receipt-paper-cartoon-vector-illustration-260nw-666049375.jpg" />
+                            <img className="receipt" alt="Receipt" src={this.state.receipts[receiptNum]} />
+                            <div className="receipt-options">
+                                <Button variant="primary" className="upload-receipt" type="submit">123123</Button>
+                                <Button variant="primary" className="upload-receipt" type="submit">upload receipt</Button>
+                                <Button variant="primary" className="upload-receipt" type="submit">➡️</Button>
+                            </div>
                         </div>
                     </div>
                     <div>
