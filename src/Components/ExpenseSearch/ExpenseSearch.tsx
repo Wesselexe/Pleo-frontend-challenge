@@ -76,10 +76,11 @@ class ExpenseSearch extends React.Component<Expense> {
         (this.refs.fileUploader as HTMLElement).click();
     }
 
+    // receipts need to be shown when user uploads one.
     uploadReceipt = async (event:any) => {
         console.log(event.target)
         await addReceipt(this.props.id, event.target.files[0]);
-        this.props.update()
+        await this.props.update();
     }
 
     changeReceipt = (id:string) => {
