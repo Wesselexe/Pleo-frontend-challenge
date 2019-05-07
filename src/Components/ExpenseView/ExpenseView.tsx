@@ -7,6 +7,7 @@ import { fetchExpenses } from '../../Api/Api'
 
   interface State {
     items: any[],
+    totalPages: number;
     isLoaded: boolean,
     filter: string,
     users:string[]
@@ -16,6 +17,7 @@ import { fetchExpenses } from '../../Api/Api'
 class ExpenseView extends React.Component {
     state: State = {
         items: [],
+        totalPages: 0,
         isLoaded: false,
         filter: "",
         users: []
@@ -23,9 +25,12 @@ class ExpenseView extends React.Component {
 
     componentDidMount() {
         const request = async () => {
-            const response = await fetchExpenses()
-            await console.log(response)
-            await this.setState({items: response})
+            const response = await fetchExpenses();
+            // new code
+            this.setState({totalPages: response.total / 25 + 1}) ;
+            await console.log(this.state.totalPages)
+            // end of new code
+            await this.setState({items: response.expenses})
             await this.postInit();
             await this.setState({isLoaded: true})
         }
@@ -43,9 +48,9 @@ class ExpenseView extends React.Component {
     refresh = ():void => {
         const request = async () => {
             const response = await fetchExpenses()
-            await console.log(response)
+            await console.log(response.expenses)
             await this.setState({
-                items: response,
+                items: response.expenses,
                 isLoaded: true
             })
             if (this.state.filter !== "") {

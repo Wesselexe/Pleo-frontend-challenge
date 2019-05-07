@@ -5,8 +5,8 @@ const fetchExpenses = (limit?:string, offset?:string):any => {
     return fetch(endpoint)
     .then(response => response.json())
     .then((result) => {
-        if (result.expenses) {
-            return result.expenses
+        if (result) {
+            return result
         }
     })
 }

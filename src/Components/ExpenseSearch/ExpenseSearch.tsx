@@ -5,7 +5,6 @@ import { addComment, addReceipt } from '../../Api/Api'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-
 interface Expense {
     id:string,
     amount:Amount,
@@ -37,23 +36,24 @@ interface User {
 interface State {
     receipts: string[],
     activeExpense: boolean,
-    commentText: string
+    commentText: string,
+    isLoaded: boolean
 }
 
 class ExpenseSearch extends React.Component<Expense> {
+
     state: State = {
         receipts: ["https://image.shutterstock.com/image-vector/receipt-paper-cartoon-vector-illustration-260nw-666049375.jpg"],
         activeExpense: false,
-        commentText: ""
+        commentText: "",
+        isLoaded: false
     }
 
     componentDidMount() {
-        console.log(this.props.receipts[0])
         if (this.props.receipts.length > 1) {
             this.setState({receipts: ["http://localhost:3000" + this.props.receipts[0].url]})
         }
-        
-    }
+    }    
     
     expenseClick = (event:React.MouseEvent):void => {
         this.setState({activeExpense: !this.state.activeExpense})
@@ -63,7 +63,7 @@ class ExpenseSearch extends React.Component<Expense> {
         this.setState({commentText: event.target.value})
     }
 
-    commentConfirm = async (event:React.MouseEvent) => {
+    commentConfirm = async (event:React.MouseEvent): Promise<void> => {
         event.preventDefault();
         await addComment(this.props.id, this.state.commentText);
         this.props.update();
@@ -74,8 +74,9 @@ class ExpenseSearch extends React.Component<Expense> {
     }
 
     uploadReceipt = async (event:any) => {
-        console.log(event.target.files[0])
-        addReceipt(this.props.id, event.target.files[0]);
+        await addReceipt(this.props.id, event.target.files[0]);
+        this.props.update()
+        this.setState({receipts: ["http://localhost:3000" + this.props.receipts[0].url]})
     }
 
     render() {
@@ -96,7 +97,6 @@ class ExpenseSearch extends React.Component<Expense> {
             )
         } else {
             let receiptNum:number = 0;
-
             return (
                 <Fragment>
                     <div className='active-expense-box'>
@@ -122,7 +122,9 @@ class ExpenseSearch extends React.Component<Expense> {
                             <img className="receipt" alt="Receipt" src={this.state.receipts[receiptNum]} />
                             <div className="receipt-options" onClick={this.uploadReceiptButton}>
                                 <input type="file" id="file" ref="fileUploader" style={{display: "none"}} onChange={this.uploadReceipt}></input>
+                                <Button variant="primary">Left</Button>
                                 <Button variant="primary">Upload receipt</Button>
+                                <Button variant="primary">Forward</Button>
                             </div>
                         </div>
                     </div>
