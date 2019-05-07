@@ -11,12 +11,16 @@ interface Expense {
     amount:Amount,
     date:string,
     merchant:string,
-    receipts:string[],
+    receipts:Receipts[],
     comment:string,
     category:string,
     user:User,
     index:number,
     update:any
+}
+
+interface Receipts {
+    url:string
 }
 
 interface Amount {
@@ -44,9 +48,11 @@ class ExpenseSearch extends React.Component<Expense> {
     }
 
     componentDidMount() {
-        if (this.props.receipts === []) {
-            this.setState({receipts: this.props.receipts})
+        console.log(this.props.receipts[0])
+        if (this.props.receipts.length > 1) {
+            this.setState({receipts: ["http://localhost:3000" + this.props.receipts[0].url]})
         }
+        
     }
     
     expenseClick = (event:React.MouseEvent):void => {
@@ -104,7 +110,7 @@ class ExpenseSearch extends React.Component<Expense> {
                             <h6>{this.props.category}</h6>
                             <Form>
                                 <Form.Group controlId="formBasicPassword">
-                                    <Form.Label><h5>Comment:</h5></Form.Label>
+                                    <Form.Label><h5>Comment</h5></Form.Label>
                                     <Form.Control as="textarea" rows="6" type="text" defaultValue={this.props.comment} onChange={this.updateCommentText}/>
                                 </Form.Group>
                                 <Button variant="primary" type="submit" onClick={this.commentConfirm}>

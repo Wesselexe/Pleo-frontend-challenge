@@ -34,23 +34,26 @@
 
 .receipts-box {
     flex-direction: column;
-    text-align: right;
+    text-align: center;
     padding: 10px 10px;
     width: 400px;
 }
 
 .receipt {
-    width: auto;
+    width: 90%;
     height: 90%;
+    object-fit: contain;
+
 }
 
 .receipt-options {
-    text-align: right;
+    text-align: center;
     flex-direction: row;
     margin: 5px;
 }
 
 .mid-box {
     width: 33%;
-    display: flexbox
+    display: flexbox;
+    justify-content: space-around
 }
