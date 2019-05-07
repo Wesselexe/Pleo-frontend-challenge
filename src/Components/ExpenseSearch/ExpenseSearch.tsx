@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-import { addComment } from '../../Api/Api'
+import { addComment, addReceipt } from '../../Api/Api'
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -63,6 +63,17 @@ class ExpenseSearch extends React.Component<Expense> {
         this.props.update();
     }
 
+    uploadReceiptButton = (event:React.MouseEvent) => {
+        (this.refs.fileUploader as HTMLElement).click();
+    }
+
+    uploadReceipt = async (event:any) => {
+        console.log(typeof event.target.files[0])
+        await addReceipt(this.props.id, event.target.files[0]);
+        
+    }
+
+
     render() {
         if (this.state.activeExpense === false) {
             return (
@@ -105,10 +116,9 @@ class ExpenseSearch extends React.Component<Expense> {
                         </div>
                         <div className="receipts-box">
                             <img className="receipt" alt="Receipt" src={this.state.receipts[receiptNum]} />
-                            <div className="receipt-options">
-                                <Button variant="primary" className="upload-receipt" type="submit">123123</Button>
-                                <Button variant="primary" className="upload-receipt" type="submit">upload receipt</Button>
-                                <Button variant="primary" className="upload-receipt" type="submit">➡️</Button>
+                            <div className="receipt-options" onClick={this.uploadReceiptButton}>
+                                <input type="file" id="file" ref="fileUploader" style={{display: "none"}} onChange={this.uploadReceipt}></input>
+                                <Button variant="primary">Upload receipt</Button>
                             </div>
                         </div>
                     </div>

@@ -29,8 +29,18 @@ const addComment = (id:string, comment:string) => {
 }
 
 // Function to upload receipt
-const addReceipt = (id:string, file:string[]) => {
-    return
+const addReceipt = (id:string, file:any) => {
+    const data = new FormData()
+    data.append('file', file)
+    return fetch((endpoint + "/" + id + "/receipts"), {
+        method: 'POST',
+        body: data,
+        headers:{
+            'Content-Type': 'application/json'
+          }
+    }).then(res => res.json())
+    .then(response => console.log('Success:', JSON.stringify(response)))
+    .catch(error => console.error('Error:', error));
 }
 
 export { fetchExpenses, addComment, addReceipt};
