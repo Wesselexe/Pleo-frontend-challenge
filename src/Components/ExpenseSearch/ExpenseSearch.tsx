@@ -68,11 +68,9 @@ class ExpenseSearch extends React.Component<Expense> {
     }
 
     uploadReceipt = async (event:any) => {
-        console.log(typeof event.target.files[0])
-        await addReceipt(this.props.id, event.target.files[0]);
-        
+        console.log(event.target.files[0])
+        addReceipt(this.props.id, event.target.files[0]);
     }
-
 
     render() {
         if (this.state.activeExpense === false) {

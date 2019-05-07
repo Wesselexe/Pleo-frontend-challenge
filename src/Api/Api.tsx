@@ -6,8 +6,6 @@ const fetchExpenses = (limit?:string, offset?:string):any => {
     .then(response => response.json())
     .then((result) => {
         if (result.expenses) {
-            console.log(result.expenses)
-            console.log(result.expenses[0].id)
             return result.expenses
         }
     })
@@ -30,14 +28,11 @@ const addComment = (id:string, comment:string) => {
 
 // Function to upload receipt
 const addReceipt = (id:string, file:any) => {
-    const data = new FormData()
-    data.append('file', file)
+    let data = new FormData()
+    data.append('receipt', file)
     return fetch((endpoint + "/" + id + "/receipts"), {
         method: 'POST',
-        body: data,
-        headers:{
-            'Content-Type': 'application/json'
-          }
+        body: data
     }).then(res => res.json())
     .then(response => console.log('Success:', JSON.stringify(response)))
     .catch(error => console.error('Error:', error));
