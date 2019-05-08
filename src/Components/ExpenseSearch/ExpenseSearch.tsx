@@ -99,7 +99,6 @@ class ExpenseSearch extends React.Component<Expense> {
     uploadReceipt = async (event:any) => {
         await addReceipt(this.props.id, event.target.files[0]);
         await this.props.refresh();
-        await this.setState({receipts: this.state.receipts.push("http://localhost:3000/receipts/" + this.props.id + "-" + (this.state.receipts.length))})
     }
 
     changeReceipt = (id:string) => {

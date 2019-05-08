@@ -48,9 +48,8 @@ class ExpenseView extends React.Component {
                 totalExpenses: response,
                 isLoaded: true
             })
-            if (this.state.filter !== "") {
-                this.filterUsers(this.state.filter);
-            }
+
+            this.filterUsers(this.state.filter); 
         }
         request();
     }
