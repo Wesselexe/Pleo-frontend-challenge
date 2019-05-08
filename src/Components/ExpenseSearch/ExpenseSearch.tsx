@@ -43,7 +43,7 @@ interface State {
 class ExpenseSearch extends React.Component<Expense> {
 
     state: State = {
-        receipts: ["https://image.shutterstock.com/image-vector/receipt-paper-cartoon-vector-illustration-260nw-666049375.jpg"],
+        receipts: [],
         activeExpense: false,
         commentText: "",
         receiptNumber: 0
@@ -55,6 +55,8 @@ class ExpenseSearch extends React.Component<Expense> {
                 return "http://localhost:3000" + it.url
             })
             this.setState({receipts: receipts})
+        } else {
+            this.setState({receipts: ["https://image.shutterstock.com/image-vector/receipt-paper-cartoon-vector-illustration-260nw-666049375.jpg"]})
         }
     }    
     
@@ -78,9 +80,15 @@ class ExpenseSearch extends React.Component<Expense> {
 
     // receipts need to be shown when user uploads one.
     uploadReceipt = async (event:any) => {
-        console.log(event.target)
         await addReceipt(this.props.id, event.target.files[0]);
         await this.props.update();
+        await this.setState({receipts: this.state.receipts.push("http://localhost:3000/receipts/" + this.props.id + "-" + (this.state.receipts.length))})
+        
+        const receipt = this.state.receipts
+        console.log(receipt)
+        await console.log(this.state.receipts[0])
+        await console.log("http://localhost:3000/receipts/" + this.props.id + "-" + (this.state.receipts.length))
+
     }
 
     changeReceipt = (id:string) => {
