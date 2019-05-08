@@ -1,5 +1,5 @@
 import React from "react";
-import { DropdownButton, Dropdown, FormControl } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
 
 import './Menu.css'
 
@@ -22,9 +22,7 @@ class Menu extends React.Component<MenuProps> {
     render() {
         return (
             <div className="menu-box">
-                <ul>
                 <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={this.handleChange} />
-                </ul>
             </div>
         )
     }
