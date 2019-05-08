@@ -15,11 +15,11 @@ const fetchExpenses = (limit?:number, offset?:number):any => {
 const fetchAll = async (numPages:number) => {
     let midleResult:any[] = [];
     for (let i = 0; i <= numPages; i++) {
-        await fetch(endpoint + "?limit=25&" + "offset=" + (25 * i))
+        await fetch(endpoint + "?limit=25&offset=" + (25 * i))
         .then(response => response.json())
         .then((result) => {
             if (result) {
-                result.expenses.map((it:any) => {
+                result.expenses.forEach((it:any):void => {
                     midleResult.push(it)
                 })
             }
