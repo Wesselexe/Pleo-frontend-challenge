@@ -2,7 +2,7 @@ import React from "react";
 import ExpenseSearch from '../ExpenseSearch/ExpenseSearch'
 import Menu from '../Menu/Menu'
 import './ExpenseView.css'
-import { fetchExpenses } from '../../Api/Api'
+import { fetchExpenses, fetchAll } from '../../Api/Api'
 
 
   interface State {
@@ -32,8 +32,10 @@ class ExpenseView extends React.Component {
             this.setState({totalPages: Math.floor(response.total / 25 + 1)}) ;
             await console.log(this.state.totalPages)
 
+            const allExpenses = await fetchAll(this.state.totalPages);
+
             await this.setState({
-                totalExpenses: response.expenses,
+                totalExpenses: allExpenses,
                 shownExpenses: response.expenses
             })
             
@@ -44,7 +46,7 @@ class ExpenseView extends React.Component {
     }
 
     postInit = () => {
-        this.state.shownExpenses.map((data) => {
+        this.state.totalExpenses.map((data) => {
             if (this.state.users.indexOf(data.user.first) === -1) {
                 return this.state.users.push(data.user.first)
             }

@@ -11,6 +11,24 @@ const fetchExpenses = (limit?:number, offset?:number):any => {
     })
 }
 
+// function to GET all expenses from the API
+const fetchAll = async (numPages:number) => {
+    let midleResult:any[] = [];
+    for (let i = 0; i <= numPages; i++) {
+        await fetch(endpoint + "?limit=25&" + "offset=" + (25 * i))
+        .then(response => response.json())
+        .then((result) => {
+            if (result) {
+                result.expenses.map((it:any) => {
+                    midleResult.push(it)
+                })
+                console.log(result.expenses)
+            }
+        })    
+    }
+    return midleResult
+}
+
 // Function to add a comment
 const addComment = (id:string, comment:string) => {
     return fetch((endpoint + "/" + id), {
@@ -38,4 +56,4 @@ const addReceipt = async (id:string, file:any) => {
     .catch(error => console.error('Error:', error));
 }
 
-export { fetchExpenses, addComment, addReceipt};
+export { fetchExpenses, addComment, addReceipt, fetchAll };
