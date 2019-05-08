@@ -2,6 +2,10 @@
     text-align: left;
 }
 
+.menu-box {
+    flex-direction: row;
+}
+
 .clear-filters {
     color: blue;
 }

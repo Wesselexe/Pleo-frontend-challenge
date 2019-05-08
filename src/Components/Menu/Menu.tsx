@@ -1,5 +1,5 @@
 import React from "react";
-import { DropdownButton, Dropdown } from 'react-bootstrap';
+import { DropdownButton, Dropdown, FormControl } from 'react-bootstrap';
 
 import './Menu.css'
 
@@ -20,6 +20,10 @@ class Menu extends React.Component<MenuProps> {
         this.setState({selectedUser: event.currentTarget.id})
     }
 
+    handleChange = (event:any) => {
+        
+    }
+
 
     render() {
         const { users } = this.props;
@@ -35,6 +39,9 @@ class Menu extends React.Component<MenuProps> {
                             })
                         }
                     </DropdownButton>
+                </ul>
+                <ul>
+                <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                 </ul>
             </div>
         )
