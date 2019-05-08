@@ -15,6 +15,7 @@ class Menu extends React.Component<MenuProps> {
 
     handleChange = (event:any) => {
         this.setState({searchText: event.target.value})
+        console.log("test log")
         this.props.filter(event.target.value)
     }
 
