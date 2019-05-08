@@ -144,7 +144,7 @@ class ExpenseSearch extends React.Component<Expense> {
                             <Form>
                                 <Form.Group controlId="formBasicPassword">
                                     <Form.Label><h5>Comment</h5></Form.Label>
-                                    <Form.Control as="textarea" rows="6" type="text" defaultValue={this.props.comment} onChange={this.updateCommentText}/>
+                                    <Form.Control as="textarea" rows="11" type="text" defaultValue={this.props.comment} onChange={this.updateCommentText}/>
                                 </Form.Group>
                                 <Button variant="warning" type="submit" onClick={this.commentConfirm}>
                                     Update comment
@@ -152,7 +152,7 @@ class ExpenseSearch extends React.Component<Expense> {
                             </Form>
                         </div>
                         <div className="receipts-box">
-                            <img className="receipt" alt="Receipt" src={this.state.receipts[this.state.receiptNumber]} />
+                            <img className="receipt receipt-active" alt="Receipt" src={this.state.receipts[this.state.receiptNumber]} />
                             <div className="receipt-options">
                                 <input type="file" id="file" ref="fileUploader" style={{display: "none"}} onChange={this.uploadReceipt}></input>
                                 <ButtonGroup aria-label="Basic example">

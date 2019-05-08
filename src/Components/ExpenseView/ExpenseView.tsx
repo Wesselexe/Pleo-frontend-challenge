@@ -28,16 +28,15 @@ class ExpenseView extends React.Component {
     componentDidMount() {
         const request = async () => {
             const response = await fetchExpenses();
-            // new code
-            this.setState({totalPages: response.total / 25 + 1}) ;
+
+            this.setState({totalPages: Math.floor(response.total / 25 + 1)}) ;
             await console.log(this.state.totalPages)
 
-
-            // end of new code
             await this.setState({
                 totalExpenses: response.expenses,
                 shownExpenses: response.expenses
             })
+            
             await this.postInit();
             await this.setState({isLoaded: true})
         }

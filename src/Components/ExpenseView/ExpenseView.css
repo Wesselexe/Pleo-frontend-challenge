@@ -36,14 +36,18 @@
     flex-direction: column;
     text-align: center;
     padding: 10px 10px;
-    width: 400px;
+    width: 33%;
 }
 
 .receipt {
     width: 90%;
     height: 90%;
     object-fit: contain;
+    transition: transform .2s;
+}
 
+.receipt-active:hover {
+    transform: scale(1.5);
 }
 
 .receipt-options {

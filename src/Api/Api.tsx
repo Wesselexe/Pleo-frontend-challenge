@@ -1,7 +1,7 @@
 const endpoint:string = "http://localhost:3000/expenses";
 
 // function to GET expenses from the API
-const fetchExpenses = (limit?:string, offset?:string):any => {
+const fetchExpenses = (limit?:number, offset?:number):any => {
     return fetch(endpoint)
     .then(response => response.json())
     .then((result) => {
