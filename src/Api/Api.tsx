@@ -22,7 +22,6 @@ const fetchAll = async (numPages:number) => {
                 result.expenses.map((it:any) => {
                     midleResult.push(it)
                 })
-                console.log(result.expenses)
             }
         })    
     }

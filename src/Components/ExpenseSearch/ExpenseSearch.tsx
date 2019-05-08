@@ -16,7 +16,7 @@ interface Expense {
     category:string,
     user:User,
     index:number,
-    update:any
+    refresh:any
 }
 
 interface Receipts {
@@ -88,7 +88,7 @@ class ExpenseSearch extends React.Component<Expense> {
     commentConfirm = async (event:React.MouseEvent): Promise<void> => {
         event.preventDefault();
         await addComment(this.props.id, this.state.commentText);
-        this.props.update();
+        this.props.refresh();
     }
 
     uploadReceiptButton = (event:React.MouseEvent) => {
@@ -98,9 +98,8 @@ class ExpenseSearch extends React.Component<Expense> {
     // receipts need to be shown when user uploads one.
     uploadReceipt = async (event:any) => {
         await addReceipt(this.props.id, event.target.files[0]);
-        await this.props.update()
-        //await this.props.update();
-        //await this.setState({receipts: this.state.receipts.push("http://localhost:3000/receipts/" + this.props.id + "-" + (this.state.receipts.length))})
+        await this.props.refresh();
+        await this.setState({receipts: this.state.receipts.push("http://localhost:3000/receipts/" + this.props.id + "-" + (this.state.receipts.length))})
     }
 
     changeReceipt = (id:string) => {

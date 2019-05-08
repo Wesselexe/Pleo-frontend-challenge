@@ -11,7 +11,6 @@ import { fetchExpenses, fetchAll } from '../../Api/Api'
     totalPages: number;
     isLoaded: boolean,
     filter: string,
-    users:string[]
 } 
 
 
@@ -21,44 +20,32 @@ class ExpenseView extends React.Component {
         shownExpenses: [],
         totalPages: 0,
         isLoaded: false,
-        filter: "",
-        users: []
+        filter: ""
     };
 
     componentDidMount() {
         const request = async () => {
             const response = await fetchExpenses();
-
             this.setState({totalPages: Math.floor(response.total / 25 + 1)}) ;
-            await console.log(this.state.totalPages)
 
             const allExpenses = await fetchAll(this.state.totalPages);
 
             await this.setState({
                 totalExpenses: allExpenses,
-                shownExpenses: response.expenses
+                shownExpenses: allExpenses
             })
-            
-            await this.postInit();
+
             await this.setState({isLoaded: true})
         }
         request();
     }
 
-    postInit = () => {
-        this.state.totalExpenses.map((data) => {
-            if (this.state.users.indexOf(data.user.first) === -1) {
-                return this.state.users.push(data.user.first)
-            }
-        })
-    }
-
     refresh = ():void => {
         const request = async () => {
-            const response = await fetchExpenses()
-            await console.log(response.expenses)
+            const response = await fetchAll(this.state.totalPages);
+            await console.log(response)
             await this.setState({
-                shownExpenses: response.expenses,
+                totalExpenses: response,
                 isLoaded: true
             })
             if (this.state.filter !== "") {
@@ -68,23 +55,24 @@ class ExpenseView extends React.Component {
         request();
     }
 
-    filterUsers = (user:any) => {
-        if (user === "Users") {
-            this.refresh();
-            this.setState({filter: ""})
-            return
-        }
-        
-        const filteredView = this.state.totalExpenses.filter((it) => {   
-            if (it.user.first === user) {
+    filterUsers = (filterText:string) => {
+        const filteredView = this.state.totalExpenses.filter((it) => {
+            if (it.user.first.toLowerCase().indexOf(filterText.toLowerCase()) >= 0) {
+                return it
+            } else if (it.user.last.toLowerCase().indexOf(filterText.toLowerCase()) >= 0) {
+                return it
+            } else if (it.merchant.toLowerCase().indexOf(filterText.toLowerCase()) >= 0) {
+                return it
+            } else if (it.comment.toLowerCase().indexOf(filterText.toLowerCase()) >= 0) {
+                return it
+            } else if (it.amount.value.toLowerCase().indexOf(filterText.toLowerCase()) >= 0) {
                 return it
             }
         })
 
-        console.log(filteredView)
         this.setState({
-            shownExpenses: filteredView,
-            filter: user
+            filter: filterText,
+            shownExpenses: filteredView
         })
     }
 
@@ -94,10 +82,10 @@ class ExpenseView extends React.Component {
         if (isLoaded) {
             return (
                 <div>
-                    <Menu users={this.state.users} filter={this.filterUsers}/>
+                    <Menu filter={this.filterUsers}/>
                     {
                         shownExpenses.map((data) => {
-                            return <ExpenseSearch key={data.index} update={this.refresh} id={data.id} amount={data.amount} date={data.date} merchant={data.merchant} receipts={data.receipts} comment={data.comment} category={data.category} user={data.user} index={data.index}/>
+                            return <ExpenseSearch key={data.index} refresh={this.refresh} id={data.id} amount={data.amount} date={data.date} merchant={data.merchant} receipts={data.receipts} comment={data.comment} category={data.category} user={data.user} index={data.index}/>
                         })
                     }
                 </div>
