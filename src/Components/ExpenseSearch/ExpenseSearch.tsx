@@ -58,7 +58,20 @@ class ExpenseSearch extends React.Component<Expense> {
         } else {
             this.setState({receipts: ["https://image.shutterstock.com/image-vector/receipt-paper-cartoon-vector-illustration-260nw-666049375.jpg"]})
         }
-    }    
+    }
+    
+    componentDidUpdate(prevProps:Expense) {
+        if (this.props.receipts !== prevProps.receipts) {
+            if (this.props.receipts.length > 0) {
+                const receipts = this.props.receipts.map(it => {
+                    return "http://localhost:3000" + it.url
+                })
+                this.setState({receipts: receipts})
+            } else {
+                this.setState({receipts: ["https://image.shutterstock.com/image-vector/receipt-paper-cartoon-vector-illustration-260nw-666049375.jpg"]})
+            }
+        }
+    }
     
     expenseClick = (event:React.MouseEvent):void => {
         this.setState({activeExpense: !this.state.activeExpense})
@@ -81,14 +94,9 @@ class ExpenseSearch extends React.Component<Expense> {
     // receipts need to be shown when user uploads one.
     uploadReceipt = async (event:any) => {
         await addReceipt(this.props.id, event.target.files[0]);
-        await this.props.update();
-        await this.setState({receipts: this.state.receipts.push("http://localhost:3000/receipts/" + this.props.id + "-" + (this.state.receipts.length))})
-        
-        const receipt = this.state.receipts
-        console.log(receipt)
-        await console.log(this.state.receipts[0])
-        await console.log("http://localhost:3000/receipts/" + this.props.id + "-" + (this.state.receipts.length))
-
+        await this.props.update()
+        //await this.props.update();
+        //await this.setState({receipts: this.state.receipts.push("http://localhost:3000/receipts/" + this.props.id + "-" + (this.state.receipts.length))})
     }
 
     changeReceipt = (id:string) => {
@@ -136,7 +144,7 @@ class ExpenseSearch extends React.Component<Expense> {
                                     <Form.Label><h5>Comment</h5></Form.Label>
                                     <Form.Control as="textarea" rows="6" type="text" defaultValue={this.props.comment} onChange={this.updateCommentText}/>
                                 </Form.Group>
-                                <Button variant="primary" type="submit" onClick={this.commentConfirm}>
+                                <Button variant="warning" type="submit" onClick={this.commentConfirm}>
                                     Update comment
                                 </Button>
                             </Form>
@@ -145,14 +153,14 @@ class ExpenseSearch extends React.Component<Expense> {
                             <img className="receipt" alt="Receipt" src={this.state.receipts[this.state.receiptNumber]} />
                             <div className="receipt-options">
                                 <input type="file" id="file" ref="fileUploader" style={{display: "none"}} onChange={this.uploadReceipt}></input>
-                                <Button variant="primary" onClick={() => this.changeReceipt("left")}>Left</Button>
-                                <Button variant="primary" onClick={this.uploadReceiptButton} >Upload receipt</Button>
-                                <Button variant="primary" onClick={() => this.changeReceipt("right")}>Right</Button>
+                                <Button variant="warning" onClick={() => this.changeReceipt("left")}>Left</Button>
+                                <Button variant="warning" onClick={this.uploadReceiptButton} >Upload receipt</Button>
+                                <Button variant="warning" onClick={() => this.changeReceipt("right")}>Right</Button>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <Button variant="primary" size="lg" block onClick={this.expenseClick}>
+                        <Button variant="warning" size="lg" block onClick={this.expenseClick}>
                             Close
                         </Button>
                     </div>

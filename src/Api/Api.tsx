@@ -27,7 +27,7 @@ const addComment = (id:string, comment:string) => {
 }
 
 // Function to upload receipt
-const addReceipt = (id:string, file:any) => {
+const addReceipt = async (id:string, file:any) => {
     let data = new FormData()
     data.append('receipt', file)
     return fetch((endpoint + "/" + id + "/receipts"), {
