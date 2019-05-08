@@ -26,7 +26,7 @@ class Menu extends React.Component<MenuProps> {
         return (
             <div className="menu-box">
                 <ul className="filters">
-                    <DropdownButton id="dropdown-basic-button" title={this.state.selectedUser}>
+                    <DropdownButton variant="warning" id="dropdown-basic-button" title={this.state.selectedUser}>
                         <Dropdown.Item className="clear-filters" key="clear" id="Users" href="#" onClick={this.handleClick}>Clear filters</Dropdown.Item>
                         <Dropdown.Divider />
                         {

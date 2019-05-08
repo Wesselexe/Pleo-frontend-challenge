@@ -4,6 +4,7 @@ import { addComment, addReceipt } from '../../Api/Api'
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 interface Expense {
     id:string,
@@ -119,7 +120,6 @@ class ExpenseSearch extends React.Component<Expense> {
                         <h4>User: {this.props.user.first} {this.props.user.last}</h4>
                         <h4>Amount: {this.props.amount.value} · {this.props.amount.currency} </h4>
                         <h4>Merchant: {this.props.merchant}</h4>
-                        <h5>Category: {this.props.category}</h5>
                         <h5>Comment: {this.props.comment} </h5>
                     </div>
                     <div className="receipts-box">
@@ -137,7 +137,6 @@ class ExpenseSearch extends React.Component<Expense> {
                             <h4>Merchant: {this.props.merchant}</h4>
                         </div>
                         <div className="mid-box">
-                            <h5>Category:</h5>
                             <h6>{this.props.category}</h6>
                             <Form>
                                 <Form.Group controlId="formBasicPassword">
@@ -153,9 +152,11 @@ class ExpenseSearch extends React.Component<Expense> {
                             <img className="receipt" alt="Receipt" src={this.state.receipts[this.state.receiptNumber]} />
                             <div className="receipt-options">
                                 <input type="file" id="file" ref="fileUploader" style={{display: "none"}} onChange={this.uploadReceipt}></input>
-                                <Button variant="warning" onClick={() => this.changeReceipt("left")}>Left</Button>
-                                <Button variant="warning" onClick={this.uploadReceiptButton} >Upload receipt</Button>
-                                <Button variant="warning" onClick={() => this.changeReceipt("right")}>Right</Button>
+                                <ButtonGroup aria-label="Basic example">
+                                    <Button variant="warning" onClick={() => this.changeReceipt("left")}>Left</Button>
+                                    <Button variant="warning" onClick={this.uploadReceiptButton} >Upload receipt</Button>
+                                    <Button variant="warning" onClick={() => this.changeReceipt("right")}>Right</Button>
+                                </ButtonGroup>
                             </div>
                         </div>
                     </div>
