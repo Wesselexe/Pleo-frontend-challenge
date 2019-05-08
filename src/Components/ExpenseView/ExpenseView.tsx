@@ -6,7 +6,8 @@ import { fetchExpenses } from '../../Api/Api'
 
 
   interface State {
-    items: any[],
+    totalExpenses: any[],
+    shownExpenses: any[],
     totalPages: number;
     isLoaded: boolean,
     filter: string,
@@ -16,7 +17,8 @@ import { fetchExpenses } from '../../Api/Api'
 
 class ExpenseView extends React.Component {
     state: State = {
-        items: [],
+        totalExpenses: [],
+        shownExpenses: [],
         totalPages: 0,
         isLoaded: false,
         filter: "",
@@ -29,8 +31,13 @@ class ExpenseView extends React.Component {
             // new code
             this.setState({totalPages: response.total / 25 + 1}) ;
             await console.log(this.state.totalPages)
+
+
             // end of new code
-            await this.setState({items: response.expenses})
+            await this.setState({
+                totalExpenses: response.expenses,
+                shownExpenses: response.expenses
+            })
             await this.postInit();
             await this.setState({isLoaded: true})
         }
@@ -38,7 +45,7 @@ class ExpenseView extends React.Component {
     }
 
     postInit = () => {
-        this.state.items.map((data) => {
+        this.state.shownExpenses.map((data) => {
             if (this.state.users.indexOf(data.user.first) === -1) {
                 return this.state.users.push(data.user.first)
             }
@@ -50,7 +57,7 @@ class ExpenseView extends React.Component {
             const response = await fetchExpenses()
             await console.log(response.expenses)
             await this.setState({
-                items: response.expenses,
+                shownExpenses: response.expenses,
                 isLoaded: true
             })
             if (this.state.filter !== "") {
@@ -67,7 +74,7 @@ class ExpenseView extends React.Component {
             return
         }
         
-        const filteredView = this.state.items.filter((it) => {   
+        const filteredView = this.state.totalExpenses.filter((it) => {   
             if (it.user.first === user) {
                 return it
             }
@@ -75,20 +82,20 @@ class ExpenseView extends React.Component {
 
         console.log(filteredView)
         this.setState({
-            items: filteredView,
+            shownExpenses: filteredView,
             filter: user
         })
     }
 
     render() {
-        const { isLoaded, items } = this.state;
+        const { isLoaded, shownExpenses } = this.state;
 
         if (isLoaded) {
             return (
                 <div>
                     <Menu users={this.state.users} filter={this.filterUsers}/>
                     {
-                        items.map((data) => {
+                        shownExpenses.map((data) => {
                             return <ExpenseSearch key={data.index} update={this.refresh} id={data.id} amount={data.amount} date={data.date} merchant={data.merchant} receipts={data.receipts} comment={data.comment} category={data.category} user={data.user} index={data.index}/>
                         })
                     }

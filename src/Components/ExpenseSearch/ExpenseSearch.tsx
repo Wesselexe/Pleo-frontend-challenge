@@ -67,7 +67,10 @@ class ExpenseSearch extends React.Component<Expense> {
                 const receipts = this.props.receipts.map(it => {
                     return "http://localhost:3000" + it.url
                 })
-                this.setState({receipts: receipts})
+                this.setState({
+                    receipts: receipts,
+                    receiptNumber: this.props.receipts.length -1
+                })
             } else {
                 this.setState({receipts: ["https://image.shutterstock.com/image-vector/receipt-paper-cartoon-vector-illustration-260nw-666049375.jpg"]})
             }
