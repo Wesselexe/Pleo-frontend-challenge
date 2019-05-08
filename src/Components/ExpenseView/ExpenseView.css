@@ -43,11 +43,6 @@
     width: 90%;
     height: 90%;
     object-fit: contain;
-    transition: transform .2s;
-}
-
-.receipt-active:hover {
-    transform: scale(1.5);
 }
 
 .receipt-options {
