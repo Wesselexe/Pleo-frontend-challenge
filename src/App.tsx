@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
 import ExpenseView from './Components/ExpenseView/ExpenseView'
+import logo from './logo.png'
 
 
 function App() {
   return (
     <div className="App">
-      <h1>Expense Master 2000</h1>
+      <img src={logo} style={{width: "auto", height: 100}} alt="Logo" />
       <ExpenseView />
     </div>
   );

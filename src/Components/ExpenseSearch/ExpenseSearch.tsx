@@ -124,7 +124,7 @@ class ExpenseSearch extends React.Component<Expense> {
                         <h5>Comment: {this.props.comment} </h5>
                     </div>
                     <div className="receipts-box">
-                        <img className="receipt" alt="Receipt" src={this.state.receipts[0]} />
+                        <img className="receipt" alt="Receipt" src={this.state.receipts[this.state.receiptNumber]} />
                     </div>
                 </div>
             )
@@ -152,7 +152,7 @@ class ExpenseSearch extends React.Component<Expense> {
                         <div className="receipts-box">
                             <img className="receipt receipt-active" alt="Receipt" src={this.state.receipts[this.state.receiptNumber]} />
                             <div className="receipt-options">
-                                <input type="file" id="file" ref="fileUploader" style={{display: "none"}} onChange={this.uploadReceipt}></input>
+                                <input type="file" id="file" accept="image/*" ref="fileUploader" style={{display: "none"}} onChange={this.uploadReceipt}></input>
                                 <ButtonGroup aria-label="Basic example">
                                     <Button variant="warning" onClick={() => this.changeReceipt("left")}>Left</Button>
                                     <Button variant="warning" onClick={this.uploadReceiptButton} >Upload receipt</Button>
