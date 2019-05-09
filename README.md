@@ -7,7 +7,8 @@ Clone the repository and the [API](https://github.com/pleo-io/frontend-challenge
 Make sure the API is running on localhost:3000.
 
 In the project directory, you can run:
-### `npm start`
+`npm install`
+`npm start`
 
 ## functionality
 The app will list all the expenses in the api at start, the user can filter via the search field for expenses on:
