@@ -57,16 +57,17 @@ class ExpenseView extends React.Component {
     filterUsers = (filterText:string) => {
         const filteredView = this.state.totalExpenses.filter((it) => {
             if (it.user.first.toLowerCase().indexOf(filterText.toLowerCase()) >= 0) {
-                return it
+                return true
             } else if (it.user.last.toLowerCase().indexOf(filterText.toLowerCase()) >= 0) {
-                return it
+                return true
             } else if (it.merchant.toLowerCase().indexOf(filterText.toLowerCase()) >= 0) {
-                return it
+                return true
             } else if (it.comment.toLowerCase().indexOf(filterText.toLowerCase()) >= 0) {
-                return it
+                return true
             } else if (it.amount.value.toLowerCase().indexOf(filterText.toLowerCase()) >= 0) {
-                return it
+                return true
             }
+            return false
         })
 
         this.setState({

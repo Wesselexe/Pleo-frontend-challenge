@@ -23,7 +23,6 @@ class Menu extends React.Component<MenuProps> {
         this.props.filter("")
     }
 
-
     render() {
         return (
             <div className="menu-box">
