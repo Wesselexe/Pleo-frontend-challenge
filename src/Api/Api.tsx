@@ -39,7 +39,6 @@ const addComment = (id:string, comment:string) => {
             'Content-Type': 'application/json'
           }
     }).then(res => res.json())
-    .then(response => console.log('Success:', JSON.stringify(response)))
     .catch(error => console.error('Error:', error));
 }
 
@@ -51,7 +50,6 @@ const addReceipt = async (id:string, file:any) => {
         method: 'POST',
         body: data
     }).then(res => res.json())
-    .then(response => console.log('Success:', JSON.stringify(response)))
     .catch(error => console.error('Error:', error));
 }
 

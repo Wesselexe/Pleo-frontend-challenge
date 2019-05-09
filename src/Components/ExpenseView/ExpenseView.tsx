@@ -43,7 +43,6 @@ class ExpenseView extends React.Component {
     refresh = ():void => {
         const request = async () => {
             const response = await fetchAll(this.state.totalPages);
-            await console.log(response)
             await this.setState({
                 totalExpenses: response,
                 isLoaded: true
