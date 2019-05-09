@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 
 import { addComment, addReceipt } from '../../Api/Api'
+import noreceipt from '../../noreceipt.png'
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -57,7 +58,7 @@ class ExpenseSearch extends React.Component<Expense> {
             })
             this.setState({receipts: receipts})
         } else {
-            this.setState({receipts: ["https://image.shutterstock.com/image-vector/receipt-paper-cartoon-vector-illustration-260nw-666049375.jpg"]})
+            this.setState({receipts: [noreceipt]})
         }
     }
     
@@ -72,7 +73,7 @@ class ExpenseSearch extends React.Component<Expense> {
                     receiptNumber: this.props.receipts.length -1
                 })
             } else {
-                this.setState({receipts: ["https://image.shutterstock.com/image-vector/receipt-paper-cartoon-vector-illustration-260nw-666049375.jpg"]})
+                this.setState({receipts: [noreceipt]})
             }
         }
     }
