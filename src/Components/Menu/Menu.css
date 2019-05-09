@@ -1,4 +1,6 @@
 .menu-box {
     width: 500px;
     margin-left: 20px;
+    display: flex;
+    flex-direction: row;
 }
