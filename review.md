@@ -1,0 +1,11 @@
+- No feedback when uploading the receipt.
+- What does the "left"/"right" buttons do?
+- Watch out for some specific react anti patterns, like componentDidUpdate that re-updates the state, or storing the same value in duplicated states (Menu vs ExpensesView)
+- Renders and fetches all expenses at once. Make sure you only render a small amount of expenses and add more as you scroll. Adding so many expenses to the page can cause performance issues, scrolling won't be as smooth, more data is downloaded.
+- See inline code comments for deeper feedback.
+- Challenges for you:
+-- Add an infinite scrolling list and only fetch data as needed 
+-- Add feedback to actions related to async HTTP request, loading / spinner / anything
+-- Write tests for your components
+-- Use your own form componenents instead of the bootstrap ones
+-- Try some more funky CSS and make it look badass
