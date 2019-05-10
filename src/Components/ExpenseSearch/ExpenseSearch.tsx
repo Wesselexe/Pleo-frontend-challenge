@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
+/// Ah there are the interfaces! You could have extracted those in src/Api/Types.ts and import them where they are needed.
 interface Expense {
     id:string,
     amount:Amount,
@@ -42,6 +43,8 @@ interface State {
     receiptNumber: number
 }
 
+// Naming of this component is misleading, I thought it was the expense search bar.
+// Could be simply `Expense`, `ExpenseRow`, ... 
 class ExpenseSearch extends React.Component<Expense> {
 
     state: State = {
@@ -53,6 +56,7 @@ class ExpenseSearch extends React.Component<Expense> {
 
     componentDidMount() {
         if (this.props.receipts.length > 0) {
+            // This sort of data manipulation should be done on the Api/Api.ts level (outside the component)
             const receipts = this.props.receipts.map(it => {
                 return "http://localhost:3000" + it.url
             })
@@ -62,6 +66,9 @@ class ExpenseSearch extends React.Component<Expense> {
         }
     }
     
+    // ComponentDidUpdate is an antipattern. The reason you need this right now is because you store the expenses in the state
+    // but you do some manipulations to the values. A state library would help on this, or wrapping the expenses outside this component could be good.
+    // I suggest reading on async rendering https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html
     componentDidUpdate(prevProps:Expense) {
         if (this.props.receipts !== prevProps.receipts) {
             if (this.props.receipts.length > 0) {
@@ -87,6 +94,7 @@ class ExpenseSearch extends React.Component<Expense> {
     }
 
     commentConfirm = async (event:React.MouseEvent): Promise<void> => {
+        // add feedback here. Add a spinner or something hooked to a state boolean, like `fetching`
         event.preventDefault();
         await addComment(this.props.id, this.state.commentText);
         this.props.refresh();
@@ -98,7 +106,10 @@ class ExpenseSearch extends React.Component<Expense> {
 
     // receipts need to be shown when user uploads one.
     uploadReceipt = async (event:any) => {
+        // add feedback here. Add a spinner or something hooked to a state boolean, like `uploading`
+        // this.setState({uploading: true})
         await addReceipt(this.props.id, event.target.files[0]);
+        // this.setState({uploading: false})
         await this.props.refresh();
     }
 
@@ -131,7 +142,8 @@ class ExpenseSearch extends React.Component<Expense> {
             )
         } else {
             return (
-                <Fragment>
+                // You can use the <></> shorthand for <Fragment></Fragment>
+                <Fragment> 
                     <div className='active-expense-box'>
                         <div className="expense-text">
                             <h4>User: {this.props.user.first} {this.props.user.last}</h4>
@@ -174,4 +186,6 @@ class ExpenseSearch extends React.Component<Expense> {
     }
 }
 
+// you could do all this at the declaration of the component
+// Ex export default class ExpenseSearch extends React.Component<Expense> {
 export default ExpenseSearch;

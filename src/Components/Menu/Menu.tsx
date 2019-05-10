@@ -4,12 +4,18 @@ import { FormControl, Button } from 'react-bootstrap';
 import './Menu.css'
 
 interface MenuProps {
-    filter: any
+    // filter: any
+    // Add explicit types to props, especially functions so you can validate that arguments are the right ones.
+    filter: (filterText:string) => void
 }
 
 class Menu extends React.Component<MenuProps> {
 
+    // Type the State as well
     state = {
+        // You store the search text inside the Menu component but also in ExpenseView
+        // The goal is to have a single source of truth for your state. ExpenseView should pass that value down,
+        // and Menu should only call `this.props.filter(ev.target.value)` or  `this.props.filter("")`
         searchText: ""
     }
 

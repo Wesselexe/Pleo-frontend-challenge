@@ -25,6 +25,7 @@ class ExpenseView extends React.Component {
 
     componentDidMount() {
         const request = async () => {
+            // Now with the correct types, response is of type `Response`
             const response = await fetchExpenses();
             this.setState({totalPages: Math.floor(response.total / 25 + 1)}) ;
 
