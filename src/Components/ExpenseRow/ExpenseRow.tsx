@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 import { addComment, addReceipt } from '../../Api/Api'
 import noreceipt from '../../noreceipt.png'
@@ -45,7 +45,7 @@ interface State {
 
 // Naming of this component is misleading, I thought it was the expense search bar.
 // Could be simply `Expense`, `ExpenseRow`, ... 
-class ExpenseSearch extends React.Component<Expense> {
+export class ExpenseRow extends React.Component<Expense> {
 
     state: State = {
         receipts: [],
@@ -104,7 +104,6 @@ class ExpenseSearch extends React.Component<Expense> {
         (this.refs.fileUploader as HTMLElement).click();
     }
 
-    // receipts need to be shown when user uploads one.
     uploadReceipt = async (event:any) => {
         // add feedback here. Add a spinner or something hooked to a state boolean, like `uploading`
         // this.setState({uploading: true})
@@ -143,7 +142,7 @@ class ExpenseSearch extends React.Component<Expense> {
         } else {
             return (
                 // You can use the <></> shorthand for <Fragment></Fragment>
-                <Fragment> 
+                <>
                     <div className='active-expense-box'>
                         <div className="expense-text">
                             <h4>User: {this.props.user.first} {this.props.user.last}</h4>
@@ -179,7 +178,7 @@ class ExpenseSearch extends React.Component<Expense> {
                             Close
                         </Button>
                     </div>
-                </Fragment>
+                </>
             )
         }
         
@@ -188,4 +187,4 @@ class ExpenseSearch extends React.Component<Expense> {
 
 // you could do all this at the declaration of the component
 // Ex export default class ExpenseSearch extends React.Component<Expense> {
-export default ExpenseSearch;
+// export default ExpenseRow;

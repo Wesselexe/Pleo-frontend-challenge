@@ -37,7 +37,7 @@ export interface Response {
 }
 
 // Now `fetch` returns a promise of `Response`
-const fetchExpenses = (): Promise<Response> => {
+export const fetchExpenses = (): Promise<Response> => {
     return fetch(endpoint)
         .then(response => response.json())
         .then((result) => {
@@ -48,7 +48,7 @@ const fetchExpenses = (): Promise<Response> => {
 }
 
 // function to GET all expenses from the API
-const fetchAll = async (numPages: number) => {
+export const fetchAll = async (numPages: number) => {
     let midleResult: any[] = [];
     // Don't fetch too much data for nothing, fetch enough data to fill up the screen, then
     // watch the scroll position and make an "infinite scroll" or add a simple pagination
@@ -68,7 +68,7 @@ const fetchAll = async (numPages: number) => {
 
 // Function to add a comment
 // Same here, add the return type
-const addComment = (id: string, comment: string): Promise<Expense> => {
+export const addComment = (id: string, comment: string): Promise<Expense> => {
     return fetch((endpoint + "/" + id), {
             method: 'POST',
             body: JSON.stringify({
@@ -83,7 +83,7 @@ const addComment = (id: string, comment: string): Promise<Expense> => {
 
 // Function to upload receipt
 // Again return type
-const addReceipt = async (id: string, file: any): Promise<Expense> => {
+export const addReceipt = async (id: string, file: any): Promise<Expense> => {
     let data = new FormData()
     data.append('receipt', file)
     return fetch((endpoint + "/" + id + "/receipts"), {
@@ -92,12 +92,3 @@ const addReceipt = async (id: string, file: any): Promise<Expense> => {
         }).then(res => res.json())
         .catch(error => console.error('Error:', error));
 }
-
-// This is not needed, instead export each function individually
-// Ex: export const addReceipt = async (id: string, file: any): Promise<Expense> => {
-export {
-    fetchExpenses,
-    addComment,
-    addReceipt,
-    fetchAll
-};

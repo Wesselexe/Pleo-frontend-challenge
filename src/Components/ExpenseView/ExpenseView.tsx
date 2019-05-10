@@ -1,5 +1,5 @@
 import React from "react";
-import ExpenseSearch from '../ExpenseSearch/ExpenseSearch'
+import { ExpenseRow } from '../ExpenseRow/ExpenseRow'
 import Menu from '../Menu/Menu'
 import './ExpenseView.css'
 import { fetchExpenses, fetchAll } from '../../Api/Api'
@@ -85,7 +85,7 @@ class ExpenseView extends React.Component {
                     <Menu filter={this.filterUsers}/>
                     {
                         shownExpenses.map((data) => {
-                            return <ExpenseSearch key={data.index} refresh={this.refresh} id={data.id} amount={data.amount} date={data.date} merchant={data.merchant} receipts={data.receipts} comment={data.comment} category={data.category} user={data.user} index={data.index}/>
+                            return <ExpenseRow key={data.index} refresh={this.refresh} id={data.id} amount={data.amount} date={data.date} merchant={data.merchant} receipts={data.receipts} comment={data.comment} category={data.category} user={data.user} index={data.index}/>
                         })
                     }
                 </div>
