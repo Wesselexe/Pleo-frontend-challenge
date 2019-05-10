@@ -187,4 +187,3 @@ export class ExpenseRow extends React.Component<Expense> {
 
 // you could do all this at the declaration of the component
 // Ex export default class ExpenseSearch extends React.Component<Expense> {
-// export default ExpenseRow;
