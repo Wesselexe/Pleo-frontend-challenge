@@ -4,6 +4,7 @@ import Menu from '../Menu/Menu'
 import './ExpenseView.css'
 import { fetchExpenses } from '../../Api/Api'
 
+
   interface State {
     totalExpenses: any[],
     shownExpenses: any[],
@@ -31,7 +32,7 @@ class ExpenseView extends React.Component {
         const request = async () => {
             // Now with the correct types, response is of type `Response`
             const response = await fetchExpenses(0);
-            this.setState({totalPages: Math.floor(response.total / 25 + 1)}) ;
+            this.setState({totalPages: Math.floor(response.total / 25)}) ;
             await this.setState({
                 totalExpenses: response.expenses,
                 shownExpenses: response.expenses
@@ -46,8 +47,20 @@ class ExpenseView extends React.Component {
         window.removeEventListener('scroll', this.onScroll, false);
       }
 
-    refresh = (id:string):void => {
-        
+    refresh = (id:string, receipt:boolean, comment:string):void => {
+        let indexOfExpense = this.state.totalExpenses.findIndex(it => it.id === id);
+        let NewTotalExpenses = this.state.totalExpenses;
+        if (receipt) {
+            NewTotalExpenses[indexOfExpense].receipts.push("http://localhost:3000/receipts/" + id + "-" + NewTotalExpenses[indexOfExpense].receipts.length)
+            this.setState({
+                totalExpenses: NewTotalExpenses
+            })
+        } else if (comment) {
+            NewTotalExpenses[indexOfExpense].comment = comment
+            this.setState({
+                totalExpenses: NewTotalExpenses
+            })
+        }
     }
 
     loadMore = () => {
@@ -56,7 +69,6 @@ class ExpenseView extends React.Component {
             const response = await fetchExpenses(page);
             await this.setState({
                 totalExpenses: this.state.totalExpenses.concat(response.expenses),
-                isLoaded: true,
                 pagesLoaded: this.state.pagesLoaded + 1
             })
 

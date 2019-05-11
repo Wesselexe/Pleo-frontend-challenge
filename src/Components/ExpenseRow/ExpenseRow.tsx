@@ -21,7 +21,7 @@ interface State {
 export class ExpenseRow extends React.Component<Expense> {
 
     state: State = {
-        receipts: [noreceipt],
+        receipts: [],
         activeExpense: false,
         commentText: "",
         receiptNumber: 0
@@ -36,12 +36,15 @@ export class ExpenseRow extends React.Component<Expense> {
     // ComponentDidUpdate is an antipattern. The reason you need this right now is because you store the expenses in the state
     // but you do some manipulations to the values. A state library would help on this, or wrapping the expenses outside this component could be good.
     // I suggest reading on async rendering https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html
-    componentDidUpdate(prevProps:Expense) {
-        if (this.props.receipts !== prevProps.receipts) {
-            if (this.props.receipts.length > 0) {
-                this.setState({receipts: this.props.receipts})
+    static getDerivedStateFromProps(props:Expense, state:State) {
+        if (props.receipts !== state.receipts) {
+            if (props.receipts.length > 0) {
+                return {
+                    receipts: props.receipts
+                }
             }
         }
+        return null;
     }
     
     expenseClick = (event:React.MouseEvent):void => {
@@ -56,7 +59,7 @@ export class ExpenseRow extends React.Component<Expense> {
         // add feedback here. Add a spinner or something hooked to a state boolean, like `fetching`
         event.preventDefault();
         await addComment(this.props.id, this.state.commentText);
-        this.props.refresh();
+        this.props.refresh(this.props.id, false, this.state.commentText);
     }
 
     uploadReceiptButton = (event:React.MouseEvent) => {
@@ -67,8 +70,8 @@ export class ExpenseRow extends React.Component<Expense> {
         // add feedback here. Add a spinner or something hooked to a state boolean, like `uploading`
         // this.setState({uploading: true})
         await addReceipt(this.props.id, event.target.files[0]);
+        this.props.refresh(this.props.id, true, false)
         // this.setState({uploading: false})
-        await this.props.refresh();
     }
 
     changeReceipt = (id:string) => {

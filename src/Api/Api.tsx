@@ -35,7 +35,7 @@ export const fetchAll = async (numPages: number) => {
     // Don't fetch too much data for nothing, fetch enough data to fill up the screen, then
     // watch the scroll position and make an "infinite scroll" or add a simple pagination
     for (let i = 0; i <= numPages; i++) {
-        await fetch(endpoint + "?limit=25&offset=" + (25 * i))
+        await fetch(endpoint + "?limit=10&offset=" + (25 * i))
             .then(response => response.json())
             .then((result) => {
                 if (result) {
