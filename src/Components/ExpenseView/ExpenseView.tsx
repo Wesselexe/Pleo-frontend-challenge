@@ -2,8 +2,7 @@ import React from "react";
 import { ExpenseRow } from '../ExpenseRow/ExpenseRow'
 import Menu from '../Menu/Menu'
 import './ExpenseView.css'
-import { fetchExpenses, fetchAll } from '../../Api/Api'
-import { number } from "prop-types";
+import { fetchExpenses } from '../../Api/Api'
 
   interface State {
     totalExpenses: any[],
@@ -33,12 +32,9 @@ class ExpenseView extends React.Component {
             // Now with the correct types, response is of type `Response`
             const response = await fetchExpenses(0);
             this.setState({totalPages: Math.floor(response.total / 25 + 1)}) ;
-
-            const allExpenses = await fetchExpenses(0);
-
             await this.setState({
-                totalExpenses: allExpenses.expenses,
-                shownExpenses: allExpenses.expenses
+                totalExpenses: response.expenses,
+                shownExpenses: response.expenses
             })
 
             await this.setState({isLoaded: true})
@@ -50,23 +46,8 @@ class ExpenseView extends React.Component {
         window.removeEventListener('scroll', this.onScroll, false);
       }
 
-    refresh = (number?:number):void => {
-        const request = async (page:number) => {
-            const response = await fetchExpenses(page);
-            await this.setState({
-                totalExpenses: response.expenses,
-                isLoaded: true
-            })
-
-            this.filterUsers(this.state.filter); 
-        }
-        request(0);
-       // let pageCounter:number = 0;
-       // while (this.state.shownExpenses.length < 3 && pageCounter <= this.state.totalPages) {
-       //     console.log("Test to see if called")
-       //     pageCounter += 1
-       //     request(pageCounter);
-       // }
+    refresh = (id:string):void => {
+        
     }
 
     loadMore = () => {
@@ -111,8 +92,7 @@ class ExpenseView extends React.Component {
     onScroll = () => {
         if (
           (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) &&
-          this.state.totalExpenses.length && !this.state.pagesLoading
-        ) {
+          this.state.pagesLoaded < this.state.totalPages && !this.state.pagesLoading) {
           this.loadMore();
         }
       }
@@ -128,6 +108,8 @@ class ExpenseView extends React.Component {
                         shownExpenses.map((data) => {
                             return <ExpenseRow key={data.index} refresh={this.refresh} id={data.id} amount={data.amount} date={data.date} merchant={data.merchant} receipts={data.receipts} comment={data.comment} category={data.category} user={data.user} index={data.index}/>
                         })
+
+                        
                     }
                 </div>
             )
