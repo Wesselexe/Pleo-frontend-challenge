@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
-import { Expense, Amount, User} from "../../Api/Types";
+import { Expense } from "../../Api/Types";
 
 interface State {
     receipts: string[],
@@ -30,6 +30,8 @@ export class ExpenseRow extends React.Component<Expense> {
     componentDidMount() {
         if (this.props.receipts.length > 0) {
             this.setState({receipts: this.props.receipts})
+        } else {
+            this.setState({receipts: [noreceipt]})
         }
     }
     
@@ -42,6 +44,10 @@ export class ExpenseRow extends React.Component<Expense> {
                 return {
                     receipts: props.receipts
                 }
+            } else {
+               return {
+                    receipts: [noreceipt]
+               }
             }
         }
         return null;
