@@ -77,10 +77,11 @@ export class ExpenseRow extends React.Component<Expense> {
     uploadReceipt = async (event:any) => {
         // add feedback here. Add a spinner or something hooked to a state boolean, like `uploading`
         // this.setState({uploading: true})
-        this.setState({uploadReceipt: "🖨️"})
+        this.setState({uploadReceipt: <span role="img" aria-label="printer">🖨️</span>})
         await addReceipt(this.props.id, event.target.files[0]);
         await this.props.refresh(this.props.id, true, false)
-        await this.setState({uploadReceipt: "Upload receipt"})
+        await this.setState({uploadReceipt: <span role="img" aria-label="checkmark">    ✅    </span>})
+        setTimeout(():void => { this.setState({uploadReceipt: "Upload receipt"}) }, 2000);
     }
 
     changeReceipt = (id:string) => {
