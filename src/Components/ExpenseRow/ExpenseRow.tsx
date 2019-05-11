@@ -14,7 +14,8 @@ interface State {
     activeExpense: boolean,
     commentText: string,
     receiptNumber: number,
-    uploadReceipt: string
+    uploadReceipt: string,
+    updateComment: string
 }
 
 // Naming of this component is misleading, I thought it was the expense search bar.
@@ -26,7 +27,8 @@ export class ExpenseRow extends React.Component<Expense> {
         activeExpense: false,
         commentText: "",
         receiptNumber: 0,
-        uploadReceipt: "Upload receipt"
+        uploadReceipt: "Upload receipt",
+        updateComment: "Update comment"
     }
 
     componentDidMount() {
@@ -68,6 +70,8 @@ export class ExpenseRow extends React.Component<Expense> {
         event.preventDefault();
         await addComment(this.props.id, this.state.commentText);
         this.props.refresh(this.props.id, false, this.state.commentText);
+        await this.setState({updateComment: <span role="img" aria-label="checkmark">✅</span>})
+        setTimeout(():void => { this.setState({updateComment: "Update comment"}) }, 2000);
     }
 
     uploadReceiptButton = (event:React.MouseEvent) => {
@@ -76,11 +80,10 @@ export class ExpenseRow extends React.Component<Expense> {
 
     uploadReceipt = async (event:any) => {
         // add feedback here. Add a spinner or something hooked to a state boolean, like `uploading`
-        // this.setState({uploading: true})
         this.setState({uploadReceipt: <span role="img" aria-label="printer">🖨️</span>})
         await addReceipt(this.props.id, event.target.files[0]);
         await this.props.refresh(this.props.id, true, false)
-        await this.setState({uploadReceipt: <span role="img" aria-label="checkmark">    ✅    </span>})
+        await this.setState({uploadReceipt: <span role="img" aria-label="checkmark">✅</span>})
         setTimeout(():void => { this.setState({uploadReceipt: "Upload receipt"}) }, 2000);
     }
 
@@ -129,7 +132,7 @@ export class ExpenseRow extends React.Component<Expense> {
                                     <Form.Control as="textarea" rows="11" type="text" defaultValue={this.props.comment} onChange={this.updateCommentText}/>
                                 </Form.Group>
                                 <Button variant="warning" type="submit" onClick={this.commentConfirm}>
-                                    Update comment
+                                    {this.state.updateComment}
                                 </Button>
                             </Form>
                         </div>
