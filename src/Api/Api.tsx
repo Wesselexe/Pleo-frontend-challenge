@@ -1,3 +1,5 @@
+import { Expense, Response } from './Types'
+
 const endpoint: string = "http://localhost:3000/expenses";
 
 // function to GET expenses from the API
@@ -7,41 +9,22 @@ It would be nice here to add the correct types, this is where the data comes int
 You can use json2ts.com to convert the API response to a TS interface.
 */
 
-// From json2ts
-export interface Amount {
-    value: string;
-    currency: string;
-}
 
-export interface User {
-    first: string;
-    last: string;
-    email: string;
-}
-
-export interface Expense {
-    id: string;
-    amount: Amount;
-    date: Date;
-    merchant: string;
-    receipts: any[];
-    comment: string;
-    category: string;
-    user: User;
-    index: number;
-}
-
-export interface Response {
-    expenses: Expense[];
-    total: number;
-}
 
 // Now `fetch` returns a promise of `Response`
-export const fetchExpenses = (): Promise<Response> => {
-    return fetch(endpoint)
+export const fetchExpenses = (numPage:number): Promise<Response> => {
+    return fetch(endpoint+ "?limit=25&offset=" + (25 * numPage))
         .then(response => response.json())
         .then((result) => {
             if (result) {
+                result.expenses.forEach((it:Expense) => {
+                    if (it.receipts.length > 0) {  
+                        it.receipts = it.receipts.map(iter => {
+                            return "http://localhost:3000" + iter.url
+                        })
+                        console.log(it)
+                    }
+                })
                 return result
             }
         })

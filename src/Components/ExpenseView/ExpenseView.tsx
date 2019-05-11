@@ -3,7 +3,7 @@ import { ExpenseRow } from '../ExpenseRow/ExpenseRow'
 import Menu from '../Menu/Menu'
 import './ExpenseView.css'
 import { fetchExpenses, fetchAll } from '../../Api/Api'
-
+import { number } from "prop-types";
 
   interface State {
     totalExpenses: any[],
@@ -12,7 +12,6 @@ import { fetchExpenses, fetchAll } from '../../Api/Api'
     isLoaded: boolean,
     filter: string,
 } 
-
 
 class ExpenseView extends React.Component {
     state: State = {
@@ -26,14 +25,14 @@ class ExpenseView extends React.Component {
     componentDidMount() {
         const request = async () => {
             // Now with the correct types, response is of type `Response`
-            const response = await fetchExpenses();
+            const response = await fetchExpenses(0);
             this.setState({totalPages: Math.floor(response.total / 25 + 1)}) ;
 
-            const allExpenses = await fetchAll(this.state.totalPages);
+            const allExpenses = await fetchExpenses(0);
 
             await this.setState({
-                totalExpenses: allExpenses,
-                shownExpenses: allExpenses
+                totalExpenses: allExpenses.expenses,
+                shownExpenses: allExpenses.expenses
             })
 
             await this.setState({isLoaded: true})
@@ -42,16 +41,22 @@ class ExpenseView extends React.Component {
     }
 
     refresh = ():void => {
-        const request = async () => {
-            const response = await fetchAll(this.state.totalPages);
+        const request = async (page:number) => {
+            const response = await fetchExpenses(page);
             await this.setState({
-                totalExpenses: response,
+                totalExpenses: response.expenses,
                 isLoaded: true
             })
 
             this.filterUsers(this.state.filter); 
         }
-        request();
+        request(0);
+        let pageCounter:number = 0;
+        if (this.state.shownExpenses.length < 5) {
+            console.log("Test to see if called")
+            pageCounter += 1
+            request(pageCounter);
+        }
     }
 
     filterUsers = (filterText:string) => {

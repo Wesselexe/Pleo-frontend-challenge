@@ -7,34 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
-/// Ah there are the interfaces! You could have extracted those in src/Api/Types.ts and import them where they are needed.
-interface Expense {
-    id:string,
-    amount:Amount,
-    date:string,
-    merchant:string,
-    receipts:Receipts[],
-    comment:string,
-    category:string,
-    user:User,
-    index:number,
-    refresh:any
-}
-
-interface Receipts {
-    url:string
-}
-
-interface Amount {
-    value:string,
-    currency:string
-}
-
-interface User {
-    first:string,
-    last:string,
-    email:string
-}
+import { Expense, Amount, User} from "../../Api/Types";
 
 interface State {
     receipts: string[],
@@ -48,7 +21,7 @@ interface State {
 export class ExpenseRow extends React.Component<Expense> {
 
     state: State = {
-        receipts: [],
+        receipts: [noreceipt],
         activeExpense: false,
         commentText: "",
         receiptNumber: 0
@@ -56,13 +29,7 @@ export class ExpenseRow extends React.Component<Expense> {
 
     componentDidMount() {
         if (this.props.receipts.length > 0) {
-            // This sort of data manipulation should be done on the Api/Api.ts level (outside the component)
-            const receipts = this.props.receipts.map(it => {
-                return "http://localhost:3000" + it.url
-            })
-            this.setState({receipts: receipts})
-        } else {
-            this.setState({receipts: [noreceipt]})
+            this.setState({receipts: this.props.receipts})
         }
     }
     
@@ -72,15 +39,7 @@ export class ExpenseRow extends React.Component<Expense> {
     componentDidUpdate(prevProps:Expense) {
         if (this.props.receipts !== prevProps.receipts) {
             if (this.props.receipts.length > 0) {
-                const receipts = this.props.receipts.map(it => {
-                    return "http://localhost:3000" + it.url
-                })
-                this.setState({
-                    receipts: receipts,
-                    receiptNumber: this.props.receipts.length -1
-                })
-            } else {
-                this.setState({receipts: [noreceipt]})
+                this.setState({receipts: this.props.receipts})
             }
         }
     }
