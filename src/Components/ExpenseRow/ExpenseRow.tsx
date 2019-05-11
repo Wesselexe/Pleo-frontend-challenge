@@ -13,7 +13,8 @@ interface State {
     receipts: string[],
     activeExpense: boolean,
     commentText: string,
-    receiptNumber: number
+    receiptNumber: number,
+    uploadReceipt: string
 }
 
 // Naming of this component is misleading, I thought it was the expense search bar.
@@ -24,7 +25,8 @@ export class ExpenseRow extends React.Component<Expense> {
         receipts: [],
         activeExpense: false,
         commentText: "",
-        receiptNumber: 0
+        receiptNumber: 0,
+        uploadReceipt: "Upload receipt"
     }
 
     componentDidMount() {
@@ -75,9 +77,10 @@ export class ExpenseRow extends React.Component<Expense> {
     uploadReceipt = async (event:any) => {
         // add feedback here. Add a spinner or something hooked to a state boolean, like `uploading`
         // this.setState({uploading: true})
+        this.setState({uploadReceipt: "🖨️"})
         await addReceipt(this.props.id, event.target.files[0]);
-        this.props.refresh(this.props.id, true, false)
-        // this.setState({uploading: false})
+        await this.props.refresh(this.props.id, true, false)
+        await this.setState({uploadReceipt: "Upload receipt"})
     }
 
     changeReceipt = (id:string) => {
@@ -134,9 +137,9 @@ export class ExpenseRow extends React.Component<Expense> {
                             <div className="receipt-options">
                                 <input type="file" id="file" accept="image/*" ref="fileUploader" style={{display: "none"}} onChange={this.uploadReceipt}></input>
                                 <ButtonGroup aria-label="Basic example">
-                                    <Button variant="warning" onClick={() => this.changeReceipt("left")}>Left</Button>
-                                    <Button variant="warning" onClick={this.uploadReceiptButton} >Upload receipt</Button>
-                                    <Button variant="warning" onClick={() => this.changeReceipt("right")}>Right</Button>
+                                    <Button variant="warning" onClick={() => this.changeReceipt("left")}><span role="img" aria-label="Left Arrow">⬅️</span></Button>
+                                    <Button variant="warning" onClick={this.uploadReceiptButton}>{this.state.uploadReceipt}</Button>
+                                    <Button variant="warning" onClick={() => this.changeReceipt("right")}><span role="img" aria-label="Right Arrow">➡️</span></Button>
                                 </ButtonGroup>
                             </div>
                         </div>
