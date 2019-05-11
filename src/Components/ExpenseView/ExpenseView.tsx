@@ -44,15 +44,16 @@ class ExpenseView extends React.Component {
         const request = async (page:number) => {
             const response = await fetchExpenses(page);
             await this.setState({
-                totalExpenses: response.expenses,
+                totalExpenses: this.state.totalExpenses.concat(response.expenses),
                 isLoaded: true
             })
 
             this.filterUsers(this.state.filter); 
         }
-        request(0);
+        //request(0);
         let pageCounter:number = 0;
-        if (this.state.shownExpenses.length < 5) {
+
+        while (this.state.shownExpenses.length < 3 && pageCounter <= this.state.totalPages) {
             console.log("Test to see if called")
             pageCounter += 1
             request(pageCounter);
