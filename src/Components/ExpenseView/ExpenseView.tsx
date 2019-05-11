@@ -115,7 +115,7 @@ class ExpenseView extends React.Component {
         if (isLoaded) {
             return (
                 <div>
-                    <Menu filter={this.filterUsers}/>
+                    <Menu filterFunction={this.filterUsers} filterText={this.state.filter} />
                     {
                         shownExpenses.map((data) => {
                             return <ExpenseRow key={data.index} refresh={this.refresh} id={data.id} amount={data.amount} date={data.date} merchant={data.merchant} receipts={data.receipts} comment={data.comment} category={data.category} user={data.user} index={data.index}/>
