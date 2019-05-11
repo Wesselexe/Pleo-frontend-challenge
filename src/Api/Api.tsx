@@ -22,7 +22,6 @@ export const fetchExpenses = (numPage:number): Promise<Response> => {
                         it.receipts = it.receipts.map(iter => {
                             return "http://localhost:3000" + iter.url
                         })
-                        console.log(it)
                     }
                 })
                 return result

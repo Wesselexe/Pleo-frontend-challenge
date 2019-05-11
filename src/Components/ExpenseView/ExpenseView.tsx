@@ -8,7 +8,9 @@ import { number } from "prop-types";
   interface State {
     totalExpenses: any[],
     shownExpenses: any[],
-    totalPages: number;
+    totalPages: number,
+    pagesLoaded: number,
+    pagesLoading: boolean,
     isLoaded: boolean,
     filter: string,
 } 
@@ -18,11 +20,15 @@ class ExpenseView extends React.Component {
         totalExpenses: [],
         shownExpenses: [],
         totalPages: 0,
+        pagesLoaded: 0,
+        pagesLoading: false,
         isLoaded: false,
         filter: ""
     };
 
     componentDidMount() {
+        window.addEventListener('scroll', this.onScroll, false);
+
         const request = async () => {
             // Now with the correct types, response is of type `Response`
             const response = await fetchExpenses(0);
@@ -40,24 +46,43 @@ class ExpenseView extends React.Component {
         request();
     }
 
-    refresh = ():void => {
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.onScroll, false);
+      }
+
+    refresh = (number?:number):void => {
         const request = async (page:number) => {
             const response = await fetchExpenses(page);
             await this.setState({
-                totalExpenses: this.state.totalExpenses.concat(response.expenses),
+                totalExpenses: response.expenses,
                 isLoaded: true
             })
 
             this.filterUsers(this.state.filter); 
         }
-        //request(0);
-        let pageCounter:number = 0;
+        request(0);
+       // let pageCounter:number = 0;
+       // while (this.state.shownExpenses.length < 3 && pageCounter <= this.state.totalPages) {
+       //     console.log("Test to see if called")
+       //     pageCounter += 1
+       //     request(pageCounter);
+       // }
+    }
 
-        while (this.state.shownExpenses.length < 3 && pageCounter <= this.state.totalPages) {
-            console.log("Test to see if called")
-            pageCounter += 1
-            request(pageCounter);
+    loadMore = () => {
+        this.setState({pagesLoading: true})
+        const request = async (page:number) => {
+            const response = await fetchExpenses(page);
+            await this.setState({
+                totalExpenses: this.state.totalExpenses.concat(response.expenses),
+                isLoaded: true,
+                pagesLoaded: this.state.pagesLoaded + 1
+            })
+
+            this.filterUsers(this.state.filter); 
         }
+
+        request(this.state.pagesLoaded + 1);
     }
 
     filterUsers = (filterText:string) => {
@@ -78,9 +103,19 @@ class ExpenseView extends React.Component {
 
         this.setState({
             filter: filterText,
-            shownExpenses: filteredView
+            shownExpenses: filteredView,
+            pagesLoading: false
         })
     }
+
+    onScroll = () => {
+        if (
+          (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) &&
+          this.state.totalExpenses.length && !this.state.pagesLoading
+        ) {
+          this.loadMore();
+        }
+      }
 
     render() {
         const { isLoaded, shownExpenses } = this.state;
